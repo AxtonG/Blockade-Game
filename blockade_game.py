@@ -772,14 +772,9 @@ def checkforwinner(player):
     return
 
 
-GameIsRunning = True
 while 1 == 1:
-    if GameIsRunning == True:
-        playersturn(1)
-        drawboard()
-        playersturn(2)
-        drawboard()
-    elif GameIsRunning == False:
-        print(f'Congratulations Player {player}! You have won the game, want to play again?')
-        break
+    playersturn(1)
+    drawboard()
+    playersturn(2)
+    drawboard()
 
