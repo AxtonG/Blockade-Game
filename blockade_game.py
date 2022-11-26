@@ -1,6 +1,3 @@
-from math import *
-
-
 def gameboardfunc(Row, Col):
     global cola
     if Row >= 2:
