@@ -1,3 +1,8 @@
+from math import *
+import turtle
+import time
+
+
 def gameboardfunc(Row, Col):
     global cola
     if Row >= 2:
@@ -240,16 +245,13 @@ def drawboard():
     return
 
 
-drawboard()
-
-
 def playersturn(player):
     global movelocation, blockadelocation
     while 1 == 1:
         print(f'---------------------------Player {player}---------------------------')
         print(f'Do you want to move your piece (M) or would you like to place a blockade (B): ', end='')
         choice = input()
-        if choice == 'M':
+        if choice == 'M' or choice == 'm':
             print(
                 'You may only move your piece one gridspace away from your current location, diagonals are NOT included!')
             print(f"Please specify location that you want to move (side character then bottom, EX's --> aa, ea, "
@@ -270,7 +272,6 @@ def playersturn(player):
                     print('------------------------------------------------------')
                     print(f'--------------------player {player} Won!---------------------')
                     print('------------------------------------------------------')
-
                     quit()
                 elif winnerexists == False:
                     break
@@ -289,7 +290,7 @@ def playersturn(player):
                 print('')
                 print('')
                 continue
-        elif choice == 'B':
+        elif choice == 'B' or choice == 'b':
             print(
                 'You may place a blockade any place you choose, as long as it is \n NOT obstructed by another blockade or traps the opposing player')
             print(f"Please specify location that you want to place a blockade (side character then bottom), \n"
@@ -297,8 +298,140 @@ def playersturn(player):
             blockadelocation = input()
             print('')
             print('')
-            placeblockade(blockadelocation)
-            break
+            # check conditional that block input is within boundaries
+            checkblockade(blockadelocation)
+            if coastisclear == True:
+                placeblockade(blockadelocation)
+                break
+            else:
+                print('The desired blockade is not possible, make sure the length is accurate')
+                continue
+        else:
+            print('Please enter a valid input.')
+            continue
+    return
+
+
+def checkblockade(blockadelocation):
+    global coastisclear
+    block = list(blockadelocation)  # [ , , , ]
+    for i in range(len(block)):
+        if block[i] == 'a':
+            block[i] = 0
+        elif block[i] == 'A':
+            block[i] = 1
+        elif block[i] == 'b':
+            block[i] = 2
+        elif block[i] == 'B':
+            block[i] = 3
+        elif block[i] == 'c':
+            block[i] = 4
+        elif block[i] == 'C':
+            block[i] = 5
+        elif block[i] == 'd':
+            block[i] = 6
+        elif block[i] == 'D':
+            block[i] = 7
+        elif block[i] == 'e':
+            block[i] = 8
+        elif block[i] == 'E':
+            block[i] = 9
+        elif block[i] == 'f':
+            block[i] = 10
+        elif block[i] == 'F':
+            block[i] = 11
+        elif block[i] == 'g':
+            block[i] = 12
+        elif block[i] == 'G':
+            block[i] = 13
+        elif block[i] == 'h':
+            block[i] = 14
+        elif block[i] == 'H':
+            block[i] = 15
+        elif block[i] == 'i':
+            block[i] = 16
+        elif block[i] == 'I':
+            block[i] = 17
+        elif block[i] == 'j':
+            block[i] = 18
+        elif block[i] == 'J':
+            block[i] = 19
+        elif block[i] == 'k':
+            block[i] = 20
+        elif block[i] == 'K':
+            block[i] = 21
+        elif block[i] == 'l':
+            block[i] = 22
+        elif block[i] == 'L':
+            block[i] = 23
+        elif block[i] == 'm':
+            block[i] = 24
+        elif block[i] == 'M':
+            block[i] = 25
+        elif block[i] == 'n':
+            block[i] = 26
+        elif block[i] == 'N':
+            block[i] = 27
+        elif block[i] == 'o':
+            block[i] = 28
+        elif block[i] == 'O':
+            block[i] = 29
+        elif block[i] == 'p':
+            block[i] = 30
+        elif block[i] == 'P':
+            block[i] = 31
+        elif block[i] == 'q':
+            block[i] = 32
+        elif block[i] == 'Q':
+            block[i] = 33
+        elif block[i] == 'r':
+            block[i] = 34
+        elif block[i] == 'R':
+            block[i] = 35
+        elif block[i] == 's':
+            block[i] = 36
+        elif block[i] == 'S':
+            block[i] = 37
+        elif block[i] == 't':
+            block[i] = 38
+        elif block[i] == 'T':
+            block[i] = 39
+        elif block[i] == 'u':
+            block[i] = 40
+        elif block[i] == 'U':
+            block[i] = 41
+        elif block[i] == 'v':
+            block[i] = 42
+        elif block[i] == 'V':
+            block[i] = 43
+        elif block[i] == 'w':
+            block[i] = 44
+        elif block[i] == 'W':
+            block[i] = 45
+        elif block[i] == 'x':
+            block[i] = 46
+        elif block[i] == 'X':
+            block[i] = 47
+        elif block[i] == 'y':
+            block[i] = 48
+        elif block[i] == 'Y':
+            block[i] = 49
+        elif block[i] == 'z':
+            block[i] = 50
+        elif block[i] == 'Z':
+            block[i] = 51
+    if block[0] == block[2]:
+        diff = abs(block[1] - block[3])
+        if diff == 2:
+            coastisclear = True
+        else:
+            coastisclear = False
+    elif block[1] == block[3]:
+        diff = abs(block[0] - block[2])
+        if diff == 2:
+            coastisclear = True
+        else:
+            coastisclear = False
     return
 
 
@@ -769,9 +902,794 @@ def checkforwinner(player):
     return
 
 
+def drawgridspace(gameboard):
+    gameboard.forward(20)
+    gameboard.right(90)
+    gameboard.forward(20)
+    gameboard.right(90)
+    gameboard.forward(20)
+    gameboard.right(90)
+    gameboard.forward(20)
+    gameboard.penup()
+    gameboard.right(90)
+    gameboard.forward(20)
+    gameboard.pendown()
+    return
+
+
+def drawemptyspacevert(gameboard):
+    gameboard.penup()
+    gameboard.forward(5)
+    gameboard.pendown()
+    return
+
+
+def drawplayeronepin(gameboard):
+    gameboard.forward(10)
+    gameboard.fillcolor('maroon')
+    gameboard.begin_fill()
+    gameboard.left(180)
+    gameboard.circle(10)
+    gameboard.end_fill()
+    gameboard.left(180)
+    gameboard.forward(10)
+    gameboard.right(90)
+    gameboard.forward(20)
+    gameboard.right(90)
+    gameboard.forward(20)
+    gameboard.right(90)
+    gameboard.forward(20)
+    gameboard.penup()
+    gameboard.right(90)
+    gameboard.forward(20)
+    gameboard.pendown()
+    return
+
+
+def drawplayertwopin(gameboard):
+    gameboard.forward(10)
+    gameboard.fillcolor('grey')
+    gameboard.begin_fill()
+    gameboard.left(180)
+    gameboard.circle(10)
+    gameboard.end_fill()
+    gameboard.left(180)
+    gameboard.forward(10)
+    gameboard.right(90)
+    gameboard.forward(20)
+    gameboard.right(90)
+    gameboard.forward(20)
+    gameboard.right(90)
+    gameboard.forward(20)
+    gameboard.penup()
+    gameboard.right(90)
+    gameboard.forward(20)
+    gameboard.pendown()
+    return
+
+
+def drawblockadevert(gameboard):
+    gameboard.fillcolor('black')
+    gameboard.begin_fill()
+    gameboard.forward(5)
+    gameboard.right(90)
+    gameboard.forward(20)
+    gameboard.right(90)
+    gameboard.forward(5)
+    gameboard.right(90)
+    gameboard.forward(20)
+    gameboard.right(90)
+    gameboard.penup()
+    gameboard.forward(5)
+    gameboard.pendown()
+    gameboard.end_fill()
+    return
+
+
+def resetturtleeven(gameboard):
+    # grid space is always 20x20 and vertspace is always 5x20
+    gameboard.penup()
+    gameboard.right(90)
+    gameboard.forward(20)
+    gameboard.right(90)
+    for i in range(len(cola[0])):
+        if i % 2 == 0:  # even (0, 2, 4, 6, 8, etc...) means it is a gridspace is has length 20
+            gameboard.forward(20)
+        else:  # odd (1, 3, 5, 7, etc...)
+            gameboard.forward(5)
+    gameboard.right(180)
+    gameboard.pendown()
+    return
+
+
+def drawemptyspacehor(gameboard):
+    gameboard.penup()
+    gameboard.forward(20)
+    gameboard.pendown()
+    return
+
+
+def drawintersectingemptyspace(gameboard):
+    gameboard.penup()
+    gameboard.forward(5)
+    gameboard.pendown()
+    return
+
+
+def drawhorizontalblockade(gameboard):
+    gameboard.fillcolor('black')
+    gameboard.begin_fill()
+    gameboard.forward(20)
+    gameboard.right(90)
+    gameboard.forward(5)
+    gameboard.right(90)
+    gameboard.forward(20)
+    gameboard.right(90)
+    gameboard.forward(5)
+    gameboard.penup()
+    gameboard.right(90)
+    gameboard.forward(20)
+    gameboard.pendown()
+    gameboard.end_fill()
+    return
+
+
+def drawintersectingblockade(gameboard):
+    gameboard.fillcolor('black')
+    gameboard.begin_fill()
+    gameboard.forward(5)
+    gameboard.right(90)
+    gameboard.forward(5)
+    gameboard.right(90)
+    gameboard.forward(5)
+    gameboard.right(90)
+    gameboard.forward(5)
+    gameboard.penup()
+    gameboard.right(90)
+    gameboard.forward(5)
+    gameboard.pendown()
+    gameboard.end_fill()
+    return
+
+
+def resetturtleodd(gameboard):
+    # grid space is always 20x20 and vertspace is always 5x20
+    gameboard.penup()
+    gameboard.right(90)
+    gameboard.forward(5)
+    gameboard.right(90)
+    for i in range(len(cola[0])):
+        if i % 2 == 0:  # even (0, 2, 4, 6, 8, etc...) means it is a gridspace is has length 20
+            gameboard.forward(20)
+        else:  # odd (1, 3, 5, 7, etc...)
+            gameboard.forward(5)
+    gameboard.right(180)
+    gameboard.pendown()
+    return
+
+
+def movetotextBIG(gameboard):
+    gameboard.penup()
+    gameboard.forward(10)
+    gameboard.right(90)
+    gameboard.forward(15)
+    return
+
+def moveawayfromtextBIG(gameboard):
+    gameboard.right(180)
+    gameboard.forward(15)
+    gameboard.left(90)
+    gameboard.forward(10)
+    gameboard.right(180)
+    gameboard.pendown()
+    return
+
+def tolastrowtextBIG(gameboard):
+    gameboard.penup()
+    gameboard.right(90)
+    gameboard.forward(25)
+    gameboard.left(90)
+    gameboard.forward(10)
+    gameboard.right(90)
+    gameboard.forward(15)
+    return
+
+def fromlastrowtextBIG(gameboard):
+    gameboard.right(180)
+    gameboard.forward(15)
+    gameboard.left(90)
+    gameboard.forward(10)
+    gameboard.right(90)
+    gameboard.forward(25)
+    gameboard.right(90)
+    gameboard.pendown()
+    return
+
+def move2text(gameboard):
+    gameboard.forward(25)
+    return
+
+def movetotextLITTLE(gameboard):
+    gameboard.penup()
+    gameboard.right(90)
+    gameboard.forward(8)
+    gameboard.left(90)
+    gameboard.forward(5)
+    return
+
+def movefromtextLITTLE(gameboard):
+    gameboard.left(180)
+    gameboard.forward(5)
+    gameboard.right(90)
+    gameboard.forward(8)
+    gameboard.right(90)
+    gameboard.pendown()
+    return
+
+def moveout(gameboard):
+    gameboard.forward(13)
+    gameboard.right(90)
+    gameboard.forward(7)
+    return
+
+def movein(gameboard):
+    gameboard.right(180)
+    gameboard.forward(7)
+    gameboard.left(90)
+    gameboard.forward(13)
+    gameboard.left(180)
+    return
+
+def drawgame(cola):  # simply draw out the 2D matrix of the gameboard after each turn is taken by player.
+    # use turtle.setworldcordinates to change aspect ratio and make the board fit on the screen if larger
+    # or smaller
+    x2colbigger = len(cola[0]) * 19
+    y1colbigger = -(len(cola[0]) * 19)
+    x2rowbigger = len(cola) * 19
+    y1rowbigger = -(len(cola) * 19)
+    if len(cola[0]) >= len(cola):
+        turtle.setworldcoordinates(0, y1colbigger, x2colbigger, 0)
+    elif len(cola[0]) < len(cola):
+        turtle.setworldcoordinates(0, y1rowbigger, x2rowbigger, 0)
+    global gameboard
+    turtle.tracer(0, 0)
+    gameboard = turtle.Turtle()
+    for i in range(len(cola)):  # want order drawn to be like a book, as read by the matrix by python (top left to bottom right)
+        if i >= 1:
+            if i % 2 != 0:  # odd
+                # add text/ way for assigning grid spaces/ blockade spaces a value ex- aa, AaAb, etc...
+                if i >= 1:  # declaring not last row
+                    if i == 1:
+                        movetotextBIG(gameboard)
+                        gameboard.write('a')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 3:
+                        movetotextBIG(gameboard)
+                        gameboard.write('b')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 5:
+                        movetotextBIG(gameboard)
+                        gameboard.write('c')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 7:
+                        movetotextBIG(gameboard)
+                        gameboard.write('d')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 9:
+                        movetotextBIG(gameboard)
+                        gameboard.write('e')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 11:
+                        movetotextBIG(gameboard)
+                        gameboard.write('f')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 13:
+                        movetotextBIG(gameboard)
+                        gameboard.write('g')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 15:
+                        movetotextBIG(gameboard)
+                        gameboard.write('h')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 17:
+                        movetotextBIG(gameboard)
+                        gameboard.write('i')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 19:
+                        movetotextBIG(gameboard)
+                        gameboard.write('j')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 21:
+                        movetotextBIG(gameboard)
+                        gameboard.write('k')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 23:
+                        movetotextBIG(gameboard)
+                        gameboard.write('l')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 25:
+                        movetotextBIG(gameboard)
+                        gameboard.write('m')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 27:
+                        movetotextBIG(gameboard)
+                        gameboard.write('n')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 29:
+                        movetotextBIG(gameboard)
+                        gameboard.write('o')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 31:
+                        movetotextBIG(gameboard)
+                        gameboard.write('p')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 33:
+                        movetotextBIG(gameboard)
+                        gameboard.write('q')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 35:
+                        movetotextBIG(gameboard)
+                        gameboard.write('r')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 37:
+                        movetotextBIG(gameboard)
+                        gameboard.write('s')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 39:
+                        movetotextBIG(gameboard)
+                        gameboard.write('t')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 41:
+                        movetotextBIG(gameboard)
+                        gameboard.write('u')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 43:
+                        movetotextBIG(gameboard)
+                        gameboard.write('v')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 45:
+                        movetotextBIG(gameboard)
+                        gameboard.write('w')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 47:
+                        movetotextBIG(gameboard)
+                        gameboard.write('x')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 49:
+                        movetotextBIG(gameboard)
+                        gameboard.write('y')
+                        moveawayfromtextBIG(gameboard)
+                    elif i == 51:
+                        movetotextBIG(gameboard)
+                        gameboard.write('z')
+                        moveawayfromtextBIG(gameboard)
+                if i == len(cola) - 2:  # last row
+                    if i == 3:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('c')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 5:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('d')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 7:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('e')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 9:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('f')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 11:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('g')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 13:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('h')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 15:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('i')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 17:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('j')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 19:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('k')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 21:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('l')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 23:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('m')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 25:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('n')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 27:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('o')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 29:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('p')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 31:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('q')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 33:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('r')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 35:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('s')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 37:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('t')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 39:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('u')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 41:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('v')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 43:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('w')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 45:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('x')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 47:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('y')
+                        fromlastrowtextBIG(gameboard)
+                    elif i == 49:
+                        tolastrowtextBIG(gameboard)
+                        gameboard.write('z')
+                        fromlastrowtextBIG(gameboard)
+                resetturtleeven(gameboard)
+            elif i % 2 == 0:  # even
+                if i == 2:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('A')
+                    movefromtextLITTLE(gameboard)
+                elif i == 4:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('B')
+                    movefromtextLITTLE(gameboard)
+                elif i == 6:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('C')
+                    movefromtextLITTLE(gameboard)
+                elif i == 8:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('D')
+                    movefromtextLITTLE(gameboard)
+                elif i == 10:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('E')
+                    movefromtextLITTLE(gameboard)
+                elif i == 12:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('F')
+                    movefromtextLITTLE(gameboard)
+                elif i == 14:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('G')
+                    movefromtextLITTLE(gameboard)
+                elif i == 16:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('H')
+                    movefromtextLITTLE(gameboard)
+                elif i == 18:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('I')
+                    movefromtextLITTLE(gameboard)
+                elif i == 20:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('J')
+                    movefromtextLITTLE(gameboard)
+                elif i == 22:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('K')
+                    movefromtextLITTLE(gameboard)
+                elif i == 24:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('L')
+                    movefromtextLITTLE(gameboard)
+                elif i == 26:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('M')
+                    movefromtextLITTLE(gameboard)
+                elif i == 28:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('N')
+                    movefromtextLITTLE(gameboard)
+                elif i == 30:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('O')
+                    movefromtextLITTLE(gameboard)
+                elif i == 32:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('P')
+                    movefromtextLITTLE(gameboard)
+                elif i == 34:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('Q')
+                    movefromtextLITTLE(gameboard)
+                elif i == 36:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('R')
+                    movefromtextLITTLE(gameboard)
+                elif i == 38:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('S')
+                    movefromtextLITTLE(gameboard)
+                elif i == 40:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('T')
+                    movefromtextLITTLE(gameboard)
+                elif i == 42:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('U')
+                    movefromtextLITTLE(gameboard)
+                elif i == 44:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('V')
+                    movefromtextLITTLE(gameboard)
+                elif i == 46:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('W')
+                    movefromtextLITTLE(gameboard)
+                elif i == 48:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('X')
+                    movefromtextLITTLE(gameboard)
+                elif i == 50:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('Y')
+                    movefromtextLITTLE(gameboard)
+                elif i == 52:
+                    movetotextLITTLE(gameboard)
+                    gameboard.write('Z')
+                    movefromtextLITTLE(gameboard)
+                resetturtleodd(gameboard)
+        for j in range(len(cola[i])):
+            if i % 2 == 0:  # know if blockade even, thus blockade will be standing up right / vertical
+                if cola[i][j] == "'":  # grid spot
+                    drawgridspace(gameboard)
+                elif cola[i][j] == '|':  # empty space vertical
+                    drawemptyspacevert(gameboard)
+                elif cola[i][j] == '0':  # player1 pin
+                    drawplayeronepin(gameboard)
+                elif cola[i][j] == '1':  # player2 pin
+                    drawplayertwopin(gameboard)
+                elif cola[i][j] == '=':  # blockade
+                    drawblockadevert(gameboard)
+            else:  # everything else is odd, thus blockade will be laying sideways / horizontal and no pins should exist
+                if cola[i][j] == '-':  # empty space horizontal
+                    drawemptyspacehor(gameboard)
+                elif cola[i][j] == '.':  # empty space intersections
+                    drawintersectingemptyspace(gameboard)
+                elif cola[i][j] == '=':  # blockade
+                    if j % 2 == 0:
+                        drawhorizontalblockade(gameboard)
+                    elif j % 2 != 0:
+                        drawintersectingblockade(gameboard)
+    resetturtleeven(gameboard)
+    gameboard.penup()
+    gameboard.right(90)
+    gameboard.forward(15)
+    gameboard.left(90)
+    gameboard.forward(7)
+    gameboard.write('a')
+    for i in range(len(cola[0])):
+        if i % 2 == 0: # even/ for gridspace assignments
+            if i == 2:
+                move2text(gameboard)
+                gameboard.write('b')
+            elif i == 4:
+                move2text(gameboard)
+                gameboard.write('c')
+            elif i == 6:
+                move2text(gameboard)
+                gameboard.write('d')
+            elif i == 8:
+                move2text(gameboard)
+                gameboard.write('e')
+            elif i == 10:
+                move2text(gameboard)
+                gameboard.write('f')
+            elif i == 12:
+                move2text(gameboard)
+                gameboard.write('g')
+            elif i == 14:
+                move2text(gameboard)
+                gameboard.write('h')
+            elif i == 16:
+                move2text(gameboard)
+                gameboard.write('i')
+            elif i == 18:
+                move2text(gameboard)
+                gameboard.write('j')
+            elif i == 20:
+                move2text(gameboard)
+                gameboard.write('k')
+            elif i == 22:
+                move2text(gameboard)
+                gameboard.write('l')
+            elif i == 24:
+                move2text(gameboard)
+                gameboard.write('m')
+            elif i == 26:
+                move2text(gameboard)
+                gameboard.write('n')
+            elif i == 28:
+                move2text(gameboard)
+                gameboard.write('o')
+            elif i == 30:
+                move2text(gameboard)
+                gameboard.write('p')
+            elif i == 32:
+                move2text(gameboard)
+                gameboard.write('q')
+            elif i == 34:
+                move2text(gameboard)
+                gameboard.write('r')
+            elif i == 36:
+                move2text(gameboard)
+                gameboard.write('s')
+            elif i == 38:
+                move2text(gameboard)
+                gameboard.write('t')
+            elif i == 40:
+                move2text(gameboard)
+                gameboard.write('u')
+            elif i == 42:
+                move2text(gameboard)
+                gameboard.write('v')
+            elif i == 44:
+                move2text(gameboard)
+                gameboard.write('w')
+            elif i == 46:
+                move2text(gameboard)
+                gameboard.write('x')
+            elif i == 48:
+                move2text(gameboard)
+                gameboard.write('y')
+            elif i == 50:
+                move2text(gameboard)
+                gameboard.write('z')
+        elif i % 2 != 0:  # odd / blockade spaces assignments (write text)
+            if i == 1:
+                moveout(gameboard)
+                gameboard.write('A')
+                movein(gameboard)
+            elif i == 3:
+                moveout(gameboard)
+                gameboard.write('B')
+                movein(gameboard)
+            elif i == 5:
+                moveout(gameboard)
+                gameboard.write('C')
+                movein(gameboard)
+            elif i == 7:
+                moveout(gameboard)
+                gameboard.write('D')
+                movein(gameboard)
+            elif i == 9:
+                moveout(gameboard)
+                gameboard.write('E')
+                movein(gameboard)
+            elif i == 11:
+                moveout(gameboard)
+                gameboard.write('F')
+                movein(gameboard)
+            elif i == 13:
+                moveout(gameboard)
+                gameboard.write('G')
+                movein(gameboard)
+            elif i == 15:
+                moveout(gameboard)
+                gameboard.write('H')
+                movein(gameboard)
+            elif i == 17:
+                moveout(gameboard)
+                gameboard.write('I')
+                movein(gameboard)
+            elif i == 19:
+                moveout(gameboard)
+                gameboard.write('J')
+                movein(gameboard)
+            elif i == 21:
+                moveout(gameboard)
+                gameboard.write('K')
+                movein(gameboard)
+            elif i == 23:
+                moveout(gameboard)
+                gameboard.write('L')
+                movein(gameboard)
+            elif i == 25:
+                moveout(gameboard)
+                gameboard.write('M')
+                movein(gameboard)
+            elif i == 27:
+                moveout(gameboard)
+                gameboard.write('N')
+                movein(gameboard)
+            elif i == 29:
+                moveout(gameboard)
+                gameboard.write('O')
+                movein(gameboard)
+            elif i == 31:
+                moveout(gameboard)
+                gameboard.write('P')
+                movein(gameboard)
+            elif i == 33:
+                moveout(gameboard)
+                gameboard.write('Q')
+                movein(gameboard)
+            elif i == 35:
+                moveout(gameboard)
+                gameboard.write('R')
+                movein(gameboard)
+            elif i == 37:
+                moveout(gameboard)
+                gameboard.write('S')
+                movein(gameboard)
+            elif i == 39:
+                moveout(gameboard)
+                gameboard.write('T')
+                movein(gameboard)
+            elif i == 41:
+                moveout(gameboard)
+                gameboard.write('U')
+                movein(gameboard)
+            elif i == 43:
+                moveout(gameboard)
+                gameboard.write('V')
+                movein(gameboard)
+            elif i == 45:
+                moveout(gameboard)
+                gameboard.write('W')
+                movein(gameboard)
+            elif i == 47:
+                moveout(gameboard)
+                gameboard.write('X')
+                movein(gameboard)
+            elif i == 49:
+                moveout(gameboard)
+                gameboard.write('Y')
+                movein(gameboard)
+            elif i == 51:
+                moveout(gameboard)
+                gameboard.write('Z')
+                movein(gameboard)
+    gameboard.penup()
+    gameboard.goto(1000, 1000)
+    turtle.update()
+    return
+
+
+drawgame(cola)
+gameboard.clear()
 while 1 == 1:
     playersturn(1)
-    drawboard()
+    drawgame(cola)
+    gameboard.clear()
     playersturn(2)
-    drawboard()
-
+    drawgame(cola)
+    gameboard.clear()
