@@ -135,126 +135,6 @@ ColAssignments = ['a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F', 'g
                   'o', 'O', 'p', 'P', 'q', 'Q', 'r', 'R', 's', 'S', 't', 'T', 'u', 'U', 'v',
                   'V', 'w', 'W', 'x', 'X', 'y', 'Y', 'Z', 'z']
 
-def drawboard():
-    """
-    FUNCTION IS CURRENTLY USELESS UNLESS FOR CHECKING
-    This function was essentially used for testing before turtle graphics were utilized
-    The function prints the board out on python console and adds the board grid assignments a-z
-    based on size of board.
-    :return: there are no returns, simply prints boards on console if used
-    """
-    for i in range(len(cola)):
-        for j in range(len(cola[i])):
-            print(cola[i][j], end='')
-        if i == 0:
-            print(' a', end='')
-        elif i == 1:
-            print(' A', end='')
-        elif i == 2:
-            print(' b', end='')
-        elif i == 3:
-            print(' B', end='')
-        elif i == 4:
-            print(' c', end='')
-        elif i == 5:
-            print(' C', end='')
-        elif i == 6:
-            print(' d', end='')
-        elif i == 7:
-            print(' D', end='')
-        elif i == 8:
-            print(' e', end='')
-        elif i == 9:
-            print(' E', end='')
-        elif i == 10:
-            print(' f', end='')
-        elif i == 11:
-            print(' F', end='')
-        elif i == 12:
-            print(' g', end='')
-        elif i == 13:
-            print(' G', end='')
-        elif i == 14:
-            print(' h', end='')
-        elif i == 15:
-            print(' H', end='')
-        elif i == 16:
-            print(' i', end='')
-        elif i == 17:
-            print(' I', end='')
-        elif i == 18:
-            print(' j', end='')
-        elif i == 19:
-            print(' J', end='')
-        elif i == 20:
-            print(' k', end='')
-        elif i == 21:
-            print(' K', end='')
-        elif i == 22:
-            print(' l', end='')
-        elif i == 23:
-            print(' L', end='')
-        elif i == 24:
-            print(' m', end='')
-        elif i == 25:
-            print(' M', end='')
-        elif i == 26:
-            print(' n', end='')
-        elif i == 27:
-            print(' N', end='')
-        elif i == 28:
-            print(' o', end='')
-        elif i == 29:
-            print(' O', end='')
-        elif i == 30:
-            print(' p', end='')
-        elif i == 31:
-            print(' P', end='')
-        elif i == 32:
-            print(' q', end='')
-        elif i == 33:
-            print(' Q', end='')
-        elif i == 34:
-            print(' r', end='')
-        elif i == 35:
-            print(' R', end='')
-        elif i == 36:
-            print(' s', end='')
-        elif i == 37:
-            print(' S', end='')
-        elif i == 38:
-            print(' t', end='')
-        elif i == 39:
-            print(' T', end='')
-        elif i == 40:
-            print(' u', end='')
-        elif i == 41:
-            print(' U', end='')
-        elif i == 42:
-            print(' v', end='')
-        elif i == 43:
-            print(' V', end='')
-        elif i == 44:
-            print(' w', end='')
-        elif i == 45:
-            print(' W', end='')
-        elif i == 46:
-            print(' x', end='')
-        elif i == 47:
-            print(' X', end='')
-        elif i == 48:
-            print(' y', end='')
-        elif i == 49:
-            print(' Y', end='')
-        elif i == 50:
-            print(' z', end='')
-        elif i == 51:
-            print(' Z', end='')
-        print('')
-    for i in range(len(cola[0])):
-        print(ColAssignments[i], end='')
-    print('')
-    return
 
 def playersturn(player):
     """
@@ -1244,4 +1124,10 @@ drawgame(cola)
 gameboard.clear()
 
 # this is loop that entire game runs in
-while 1 == 1:
+while 1 == 1:  # this can probably be changed, something while 'value' == True and once value is false game ends/ if that's the case, make sure break statement that was originally ending the game is gone
+    playersturn(1)
+    drawgame(cola)
+    gameboard.clear()  # i clear the board to redraw it each time a player moves, thus updating the board visually
+    playersturn(2)
+    drawgame(cola)
+    gameboard.clear()
