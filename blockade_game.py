@@ -294,38 +294,49 @@ def playersturn(player):
             print(f"Please specify location that you want to move (side character then bottom, EX's --> aa, ea, "
                   f"bd): ", end='')
             movelocation = input()
-            print('')
-            print('')
-            CheckPieceMovedOneGridSpace(movelocation,
-                                        player)  # check for conditionals before using movepiece() function to actually move he piece  and gives GameIsGood Variable
-            check4pinwhenmovingpin(player)  # gives space varialble
-            checkifblockadeinway(player)
-            if GameIsGood == True and space == True and blockadeNotinway == True:
-                movepiece(movelocation, player)
-                checkforwinner(player)
-                if winnerexists == True:
-                    print('------------------------------------------------------')
-                    print('----------------------Game Over-----------------------')
-                    print('------------------------------------------------------')
-                    print(f'--------------------player {player} Won!---------------------')
-                    print('------------------------------------------------------')
-                    quit()
-                elif winnerexists == False:
+            checker = list(movelocation)
+            for i in range(len(checker)):
+                try:
+                    int(checker[i])
+                    movelocationstringgood = False
+                except ValueError:
+                    movelocationstringgood = True
+            if len(movelocation) == 2 and movelocationstringgood == True:
+                print('')
+                print('')
+                CheckPieceMovedOneGridSpace(movelocation,
+                                            player)  # check for conditionals before using movepiece() function to actually move he piece  and gives GameIsGood Variable
+                check4pinwhenmovingpin(player)  # gives space varialble
+                checkifblockadeinway(player)
+                if GameIsGood == True and space == True and blockadeNotinway == True:
+                    movepiece(movelocation, player)
+                    checkforwinner(player)
+                    if winnerexists == True:
+                        print('------------------------------------------------------')
+                        print('----------------------Game Over-----------------------')
+                        print('------------------------------------------------------')
+                        print(f'--------------------player {player} Won!---------------------')
+                        print('------------------------------------------------------')
+                        quit()
+                    elif winnerexists == False:
+                        break
                     break
-                break
-            elif GameIsGood == False:
-                print('Remember! You may only move ONE grid space away from your current location.')
-                continue
-            elif space == False:
-                print('Sorry, but something is in the way!')
-                continue
-            elif blockadeNotinway == False:
-                print('Looks like someone blocked this path, try moving a different direction')
-                continue
+                elif GameIsGood == False:
+                    print('Remember! You may only move ONE grid space away from your current location.')
+                    continue
+                elif space == False:
+                    print('Sorry, but something is in the way!')
+                    continue
+                elif blockadeNotinway == False:
+                    print('Looks like someone blocked this path, try moving a different direction')
+                    continue
+                else:
+                    print('Follow the rules! Try a new spot.')
+                    print('')
+                    print('')
+                    continue
             else:
-                print('Follow the rules! Try a new spot.')
-                print('')
-                print('')
+                print('Please enter a valid input for move location.')
                 continue
         elif choice == 'B' or choice == 'b':
             print(
@@ -333,15 +344,19 @@ def playersturn(player):
             print(f"Please specify location that you want to place a blockade (side character then bottom), \n"
                   f"EX's --> AbAa): ", end='')
             blockadelocation = input()
-            print('')
-            print('')
-            # check conditional that block input is within boundaries
-            checkblockade(blockadelocation)
-            if coastisclear == True:
-                placeblockade(blockadelocation)
-                break
+            if len(blockadelocation) == 4:
+                print('')
+                print('')
+                # check conditional that block input is within boundaries
+                checkblockade(blockadelocation)
+                if coastisclear == True:
+                    placeblockade(blockadelocation)
+                    break
+                else:
+                    print('The desired blockade is not possible, make sure the length is accurate')
+                    continue
             else:
-                print('The desired blockade is not possible, make sure the length is accurate')
+                print('Please enter a valid blockade location.')
                 continue
         else:
             print('Please enter a valid input.')
